@@ -4,14 +4,15 @@
 
 **Toma el control de tus finanzas domésticas con estilo**
 
-[![Live Demo](https://img.shields.io/badge/▶_Demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://tu-url-aqui.vercel.app)
+[![Live Demo](https://img.shields.io/badge/▶_Demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://base-project-inky.vercel.app)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
 [![Tailwind](https://img.shields.io/badge/Tailwind-4.0-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com)
 
 <br />
 
-<img src="docs/screenshots/dashboard-preview.png" alt="Dashboard Preview" width="800" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/773f0cdd-2f34-4290-9512-a193974f01ea" />
+
 
 </div>
 
@@ -27,7 +28,6 @@
 - [Instalación](#-instalación)
 - [Arquitectura](#-arquitectura)
 - [Decisiones Técnicas](#-decisiones-técnicas)
-- [Roadmap](#-roadmap)
 - [Autor](#-autor)
 
 ---
@@ -108,14 +108,16 @@ Una aplicación web **privada**, **rápida** y **visual** que:
 <div align="center">
 
 ### Vista Principal
-<img src="docs/screenshots/dashboard-main.gif" alt="Dashboard Demo" width="700" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/bfb6ccd6-006d-4946-b38f-0b3d17d68ada" />
+
 
 ### Importación de Datos
-<img src="docs/screenshots/import-demo.gif" alt="Import Demo" width="700" />
+<img width="1919" height="908" alt="image" src="https://github.com/user-attachments/assets/3835c3fd-3cb3-44de-8674-a786427f556f" />
+
 
 </div>
 
-> 🔗 **[Ver Demo en Vivo](https://tu-url-aqui.vercel.app)**
+> 🔗 **[Ver Demo en Vivo](https://base-project-inky.vercel.app)**
 
 ---
 
@@ -209,21 +211,6 @@ Las apps financieras suelen ser aburridas y corporativas. El estilo Pixel Art:
 - Reduce la fricción emocional de revisar gastos
 - Diferencia el producto en el mercado
 - Demuestra capacidad de personalización de UI
-
----
-
-## 🗺 Roadmap
-
-- [x] MVP con ingreso manual
-- [x] Importación Excel/CSV
-- [x] Sistema de presupuestos y alertas
-- [x] Gráficos de distribución y tendencias
-- [x] Modo oscuro/claro
-- [ ] PWA (instalable en móvil)
-- [ ] Sincronización con Supabase (opcional)
-- [ ] Exportación de reportes PDF
-- [ ] Gastos recurrentes automáticos
-- [ ] Análisis predictivo con regresión
 
 ---
 
