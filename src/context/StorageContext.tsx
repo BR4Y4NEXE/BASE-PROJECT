@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Expense, Category, GlobalSettings, AppContextType } from '../types';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const StorageContext = createContext<AppContextType | undefined>(undefined);
 
 const DEFAULT_CATEGORIES: Category[] = [
@@ -73,9 +74,11 @@ export const StorageProvider: React.FC<StorageProviderProps> = ({ children }) =>
         setExpenses(prev => prev.map(e => e.id === id ? { ...e, ...updated } : e));
     };
 
-    const addCategory = (category: Omit<Category, 'id' | 'isCustom'>) => {
-        const newCategory = { ...category, id: uuidv4(), isCustom: true };
+    const addCategory = (category: Omit<Category, 'id' | 'isCustom'>): string => {
+        const id = uuidv4();
+        const newCategory = { ...category, id, isCustom: true };
         setCategories((prev) => [...prev, newCategory]);
+        return id;
     };
 
     const updateCategory = (id: string, updated: Partial<Category>) => {

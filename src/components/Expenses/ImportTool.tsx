@@ -3,11 +3,46 @@ import { useData } from '../../hooks/useData';
 import * as XLSX from 'xlsx';
 import { Upload, FileSpreadsheet, CheckCircle, AlertTriangle } from 'lucide-react';
 
+interface ImportRow {
+    Amount?: unknown;
+    amount?: unknown;
+    AMOUNT?: unknown;
+    Date?: unknown;
+    date?: unknown;
+    DATE?: unknown;
+    Category?: unknown;
+    category?: unknown;
+    CATEGORY?: unknown;
+    Description?: unknown;
+    description?: unknown;
+    DESCRIPTION?: unknown;
+    [key: string]: unknown;
+}
+
 const ImportTool: React.FC = () => {
-    const { addExpense, categories } = useData();
+    const { addExpense, categories, addCategory } = useData();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
+
+    // Helper for text normalization (Title Case)
+    const normalizeText = (text: string): string => {
+        if (!text) return 'Uncategorized';
+        return text
+            .trim()
+            .toLowerCase()
+            .replace(/\b\w/g, (char) => char.toUpperCase());
+    };
+
+    // Helper for random color generation
+    const generateColor = (): string => {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -20,7 +55,7 @@ const ImportTool: React.FC = () => {
                 const wb = XLSX.read(bstr, { type: 'binary' });
                 const wsname = wb.SheetNames[0];
                 const ws = wb.Sheets[wsname];
-                const data = XLSX.utils.sheet_to_json(ws);
+                const data = XLSX.utils.sheet_to_json(ws) as ImportRow[];
 
                 if (data.length === 0) {
                     setStatus('error');
@@ -29,36 +64,60 @@ const ImportTool: React.FC = () => {
                 }
 
                 let importedCount = 0;
+                // Cache for newly created categories in this batch to avoid duplicates
+                // key: normalized category name, value: category id
+                const newCategoryCache: Record<string, string> = {};
 
-                // Simple mapping: looks for 'amount', 'date', 'category', 'description'
-                // Case insensitive
-                data.forEach((row: any) => {
-                    const amount = parseFloat(row.Amount || row.amount || row.AMOUNT);
-                    let dateStr = row.Date || row.date || row.DATE;
-                    const catName = row.Category || row.category || row.CATEGORY;
-                    const desc = row.Description || row.description || row.DESCRIPTION || 'Imported Expense';
+                data.forEach((row) => {
+                    const amountVal = row.Amount || row.amount || row.AMOUNT;
+                    const amount = Math.abs(parseFloat(String(amountVal)));
+                    let dateStr: any = row.Date || row.date || row.DATE;
+
+                    const rawCatName = String(row.Category || row.category || row.CATEGORY || '');
+                    const catName = normalizeText(rawCatName);
+
+                    const desc = String(row.Description || row.description || row.DESCRIPTION || 'Imported Expense');
 
                     if (!amount || isNaN(amount)) return;
 
-                    // Date parsing (simplistic)
-                    // If excel date number
+                    // Date parsing
                     if (typeof dateStr === 'number') {
                         const dateObj = XLSX.SSF.parse_date_code(dateStr);
                         dateStr = new Date(dateObj.y, dateObj.m - 1, dateObj.d).toISOString().split('T')[0];
                     } else if (dateStr) {
-                        // Try to parse string
                         try {
                             dateStr = new Date(dateStr).toISOString().split('T')[0];
-                        } catch (e) {
+                        } catch {
                             dateStr = new Date().toISOString().split('T')[0];
                         }
                     } else {
                         dateStr = new Date().toISOString().split('T')[0];
                     }
 
-                    // Find category ID by name, or use first default
-                    const category = categories.find(c => c.name.toLowerCase() === (catName || '').toLowerCase());
-                    const categoryId = category ? category.id : categories[0].id;
+                    // Find category ID
+                    let categoryId: string;
+
+                    // 1. Check existing categories
+                    const existingCategory = categories.find(c => c.name.toLowerCase() === catName.toLowerCase());
+
+                    if (existingCategory) {
+                        categoryId = existingCategory.id;
+                    }
+                    // 2. Check cache of newly created categories
+                    else if (newCategoryCache[catName]) {
+                        categoryId = newCategoryCache[catName];
+                    }
+                    // 3. Create new category
+                    else {
+                        const newColor = generateColor();
+                        const newId = addCategory({
+                            name: catName,
+                            color: newColor,
+                            budgetLimit: 0, // Default budget
+                        });
+                        newCategoryCache[catName] = newId;
+                        categoryId = newId;
+                    }
 
                     addExpense({
                         amount,

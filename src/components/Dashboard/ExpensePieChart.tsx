@@ -9,7 +9,7 @@ const ExpensePieChart: React.FC = () => {
     const data = categories.map(cat => {
         const amount = expenses
             .filter(e => e.categoryId === cat.id)
-            .reduce((acc, curr) => acc + curr.amount, 0);
+            .reduce((acc, curr) => acc + Math.abs(curr.amount), 0);
         return {
             name: cat.name,
             value: amount,

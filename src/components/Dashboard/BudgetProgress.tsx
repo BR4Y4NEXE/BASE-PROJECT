@@ -8,7 +8,7 @@ const BudgetProgress: React.FC = () => {
     const getUsage = (catId: string) => {
         return expenses
             .filter(e => e.categoryId === catId)
-            .reduce((acc, curr) => acc + curr.amount, 0);
+            .reduce((acc, curr) => acc + Math.abs(curr.amount), 0);
     };
 
     return (
@@ -17,27 +17,25 @@ const BudgetProgress: React.FC = () => {
             <div className="space-y-6">
                 {categories.map(cat => {
                     if (cat.budgetLimit <= 0) return null;
-                    const spent = getUsage(cat.id);
+                    const spent = Math.abs(getUsage(cat.id)); // Use abs to ensure positive bar width
                     const percent = Math.min((spent / cat.budgetLimit) * 100, 100);
-
-                    let barColor = 'bg-grass'; // < 80%
-                    if (percent >= 100) barColor = 'bg-redstone'; // > 100%
-                    else if (percent >= 80) barColor = 'bg-gold'; // > 80%
 
                     return (
                         <div key={cat.id}>
                             <div className="flex justify-between text-xs font-mono mb-1">
                                 <span className="text-white">{cat.name}</span>
-                                <span className="text-stone">
+                                <span className="text-white">
                                     {formatCurrency(spent)} / {formatCurrency(cat.budgetLimit)}
                                 </span>
                             </div>
                             <div className="h-4 w-full bg-stone/20 border-2 border-stone relative">
                                 <div
-                                    className={`h-full ${barColor} transition-all duration-500`}
-                                    style={{ width: `${percent}%` }}
+                                    className="h-full transition-all duration-500"
+                                    style={{
+                                        width: `${percent}%`,
+                                        backgroundColor: cat.color
+                                    }}
                                 />
-                                {/* Pixel pattern overlay optional */}
                             </div>
                         </div>
                     )

@@ -27,7 +27,7 @@ export interface AppContextType {
     addExpense: (expense: Omit<Expense, 'id'>) => void;
     deleteExpense: (id: string) => void;
     updateExpense: (id: string, expense: Partial<Expense>) => void; // Added update
-    addCategory: (category: Omit<Category, 'id' | 'isCustom'>) => void;
+    addCategory: (category: Omit<Category, 'id' | 'isCustom'>) => string;
     updateCategory: (id: string, category: Partial<Category>) => void;
     deleteCategory: (id: string) => void;
     updateSettings: (settings: Partial<GlobalSettings>) => void;
