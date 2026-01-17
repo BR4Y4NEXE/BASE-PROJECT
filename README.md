@@ -140,7 +140,7 @@ Una aplicación web **privada**, **rápida** y **visual** que:
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/tu-usuario/dashboard-facturas-hogar.git
+git clone https://github.com/BR4Y4NEXE/BASE-PROJECT
 
 # Entrar al directorio
 cd dashboard-facturas-hogar
@@ -241,11 +241,10 @@ Las contribuciones son bienvenidas. Por favor:
 
 <div align="center">
 
-**[Tu Nombre]**
+**Brayan Velazquez Zamora**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/tu-perfil)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/tu-usuario)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=notion)](https://tu-portfolio.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin)](www.linkedin.com/in/brayan-velazquez-zamora-b7371236b)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github)](https://github.com/BR4Y4NEXE?tab=repositories)
 
 </div>
 
