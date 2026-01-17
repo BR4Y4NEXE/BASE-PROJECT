@@ -17,8 +17,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
     return (
         <aside className="w-64 bg-obsidian border-r-4 border-stone h-screen flex flex-col p-4 shadow-pixel z-10">
             <div className="mb-8 flex flex-col gap-2 items-center border-b-4 border-stone pb-6">
-                <div className="bg-diamond p-2 border-4 border-white shadow-pixel">
-                    <img src="/base_logo.png" alt="BASE" className="w-12 h-12 object-contain" style={{ width: '48px', height: '48px' }} />
+                <div className="bg-diamond border-4 border-white shadow-pixel">
+                    <img src="/base_logo.png" alt="BASE" className="w-12 h-12 block" />
                 </div>
                 <h1 className="text-2xl text-diamond font-bold tracking-widest mt-2 drop-shadow-md">BASE</h1>
             </div>
